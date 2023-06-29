@@ -1,0 +1,27 @@
+Resource Level Coverage
+===================================================
+
+Makes an estimate of high level service level coverage figures based on the following:
+
+*   Terraform Resources generally correlate with AWS Go SDK function calls prefixed by \`Create\`
+*   That function names in AWS Go SDK are identical across V1 and V2
+*   That package names are AWS Go SDK are identical across V1 and V2
+
+## Disclaimers
+
+*   This is an indicator of resource level coverage, rather than attribute level. These figures will not change as AWS release new features onto existing resources covered by the same Create API calls.
+*   Not all resources have CreateAPI calls. ACM for example uses RequestCertificate so it will appear no coverage is present.
+
+## Results as of Current Release
+
+*   {{ .TotalServiceCoverage }} out of {{ .TotalServices }} have full coverage
+*   {{ .PartialServiceCoverage }} out of {{ .TotalServices }} have partial coverage
+*   {{ .NoServiceCoverage }} out of {{ .TotalServices }} have no coverage
+
+{{- range .Services }} {{- end }}
+
+| Service | # Create Methods Available | Percentage Coverage |
+|---|---|---|
+{{- range .Services }}
+| {{ .Name }} | {{ len .CreateMethods }} | {{ printf "%.2f" .CreateCoverage }} |
+{{- end }}

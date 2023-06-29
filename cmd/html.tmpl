@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+   <script src="js/script.js" defer></script>
+</head>
+<body>
+<div class="container">
+    <h1>
+      Terraform AWS Provider Coverage
+      <small class="text-muted">By Create API Calls</small>
+    </h1>
+    <p>
+      Makes an estimate of high level service level coverage figures based on the following:
+      <ul>
+        <li>Terraform Resources generally correlate with AWS Go SDK function calls prefixed by `Create`</li>
+        <li>That function names in AWS Go SDK are identical across V1 and V2</li>
+        <li>That package names are AWS Go SDK are identical across V1 and V2</li>
+      </ul>
+    </p>
+    <h2>Disclaimers</h2>
+    <p>
+      <ul>
+        <li>This is an indicator of resource level coverage, rather than attribute level. These figures will not change as AWS release new features onto existing resources covered by the same Create API calls.</li>
+        <li>Not all resources have CreateAPI calls. ACM for example uses RequestCertificate so it will appear no coverage is present.</li>
+      </ul>
+    </p>
+    <h2>Results</h2>
+    <p>
+      <ul>
+        <li>{{ .TotalServiceCoverage }} out of {{ .TotalServices }} have full coverage</li>
+        <li>{{ .PartialServiceCoverage }} out of {{ .TotalServices }} have partial coverage</li>
+        <li>{{ .NoServiceCoverage }} out of {{ .TotalServices }} have no coverage</li>
+      </ul>
+    </p>
+    <table class="table table-striped table-bordered">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Service</th>
+          <th scope="col"># Create Methods Available</th>
+          <th scope="col">Percentage Coverage</th>
+        </tr>
+      </thead>
+      <tbody>
+     {{- range .Services }}
+        <tr>
+          <td>{{ .Name }}</td>
+          <td>{{ len .CreateMethods }}</td>
+          <td>{{ printf "%.2f" .CreateCoverage }}</td>
+        </tr>
+     {{- end }}
+      </tbody>
+    </table>
+</div>
+</body>
+</html>
