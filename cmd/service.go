@@ -1,6 +1,3 @@
-/*
-Copyright © 2023 Simon Davis simon@breathingdust.com
-*/
 package cmd
 
 import (
