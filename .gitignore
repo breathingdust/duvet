@@ -23,6 +23,4 @@ go.work
 coverage.html
 coverage.md
 
-cmd/services.go
-
 .idea/
