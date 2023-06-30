@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"bufio"
+	_ "embed"
 	"fmt"
 	"github.com/spf13/cobra"
 	"html/template"
@@ -11,6 +12,12 @@ import (
 	"reflect"
 	"strings"
 )
+
+//go:embed markdown.tmpl
+var markdownTmpl string
+
+//go:embed html.tmpl
+var htmlTmpl string
 
 // serviceCmd represents the service command
 var serviceCmd = &cobra.Command{
@@ -51,11 +58,14 @@ to quickly create a Cobra application.`,
 			}
 		}
 
-		pwd, _ := os.Getwd()
+		var tmplContents string
+		if outputFormat == "markdown" {
+			tmplContents = markdownTmpl
+		} else {
+			tmplContents = htmlTmpl
+		}
 
-		tmplFile := filepath.Join(pwd, fmt.Sprintf("cmd/%s.tmpl", outputFormat))
-
-		tmpl, err := template.ParseFiles(tmplFile)
+		tmpl, err := template.New("Template").Parse(tmplContents)
 		if err != nil {
 			panic(err)
 		}
