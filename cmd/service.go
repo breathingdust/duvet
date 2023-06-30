@@ -52,7 +52,7 @@ to quickly create a Cobra application.`,
 		}
 
 		pwd, _ := os.Getwd()
-		// "cmd/html.tmpl"
+
 		tmplFile := filepath.Join(pwd, fmt.Sprintf("cmd/%s.tmpl", outputFormat))
 
 		tmpl, err := template.ParseFiles(tmplFile)
@@ -67,7 +67,7 @@ to quickly create a Cobra application.`,
 			extension = "md"
 		}
 
-		f, err = os.Create(fmt.Sprintf("coverage.%s", extension))
+		f, err = os.Create(filepath.Join(outputDir, fmt.Sprintf("coverage.%s", extension)))
 		if err != nil {
 			panic(err)
 		}
@@ -125,7 +125,7 @@ func processService(client interface{}) ServiceResult {
 
 	// Is AWS provider using V1 or V2
 
-	err := filepath.Walk("../terraform-provider-aws/internal/service",
+	err := filepath.Walk(filepath.Join(providerDir, "internal/service"),
 		func(path string, info os.FileInfo, err error) error {
 			if err != nil {
 				return err
@@ -173,9 +173,6 @@ func getCreateMethods(input interface{}) []string {
 	return methods
 }
 
-var outputFormat string
-
 func init() {
 	rootCmd.AddCommand(serviceCmd)
-	serviceCmd.Flags().StringVarP(&outputFormat, "format", "f", "", "Format of output")
 }
