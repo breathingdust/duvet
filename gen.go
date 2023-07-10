@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"path"
@@ -10,12 +11,14 @@ import (
 )
 
 func main() {
+	fmt.Println("Creating temp directory")
 	dir, err := os.MkdirTemp("", "aws-sdk-go-v2")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer os.RemoveAll(dir)
 
+	fmt.Println("Cloning latest aws-go-sdk-v2")
 	_, err = git.PlainClone(dir, false, &git.CloneOptions{
 		URL: "https://github.com/aws/aws-sdk-go-v2.git",
 	})
@@ -28,7 +31,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
+	fmt.Println("Generating updated services.go file based on aws-go-sdk-v2")
 	f, err := os.Create("cmd/services.go")
 	defer f.Close()
 
