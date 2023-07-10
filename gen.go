@@ -1,17 +1,30 @@
-//go:build ignore
-// +build ignore
-
 package main
 
 import (
 	"log"
 	"os"
+	"path"
 	"text/template"
+
+	"github.com/go-git/go-git/v5"
 )
 
 func main() {
+	dir, err := os.MkdirTemp("", "aws-sdk-go-v2")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer os.RemoveAll(dir)
 
-	entries, err := os.ReadDir("../aws-sdk-go-v2/service")
+	_, err = git.PlainClone(dir, false, &git.CloneOptions{
+		URL: "https://github.com/aws/aws-sdk-go-v2.git",
+	})
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	entries, err := os.ReadDir(path.Join(dir, "service"))
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -46,6 +46,9 @@ import (
 		"github.com/aws/aws-sdk-go-v2/service/appconfigdata"
 	
     
+		"github.com/aws/aws-sdk-go-v2/service/appfabric"
+	
+    
 		"github.com/aws/aws-sdk-go-v2/service/appflow"
 	
     
@@ -1093,6 +1096,9 @@ func initClients () []interface{} {
 	
     
 		clients = append(clients,appconfigdata.Client{})
+	
+    
+		clients = append(clients,appfabric.Client{})
 	
     
 		clients = append(clients,appflow.Client{})
