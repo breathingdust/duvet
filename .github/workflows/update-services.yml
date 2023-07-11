@@ -11,4 +11,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: make gen
-      - run: git status
+      - run: |
+          if git status | grep "modified:   cmd/services.go"
+          then
+            git config --global user.name 'Simon Davis'
+            git config --global user.email 'simon@breathingdust.com'
+            git commit -am "Automated services update"
+            git push          
+          fi
