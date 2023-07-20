@@ -656,6 +656,9 @@ import (
 		"github.com/aws/aws-sdk-go-v2/service/mediatailor"
 	
     
+		"github.com/aws/aws-sdk-go-v2/service/medicalimaging"
+	
+    
 		"github.com/aws/aws-sdk-go-v2/service/memorydb"
 	
     
@@ -1706,6 +1709,9 @@ func initClients () []interface{} {
 	
     
 		clients = append(clients,mediatailor.Client{})
+	
+    
+		clients = append(clients,medicalimaging.Client{})
 	
     
 		clients = append(clients,memorydb.Client{})
