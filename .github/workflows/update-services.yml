@@ -9,7 +9,7 @@ jobs:
   report:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: make gen
       - run: |
           if git status | grep "modified:   cmd/services.go"
